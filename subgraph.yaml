@@ -1,0 +1,38 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SOAS
+    network: mainnet
+    source:
+      address: "0x5200000000000000000000000000000000000002"
+      abi: SOAS
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Allow
+        - Approval
+        - Claim
+        - Mint
+        - Renounce
+        - Transfer
+      abis:
+        - name: SOAS
+          file: ./abis/SOAS.json
+      eventHandlers:
+        - event: Allow(indexed address,indexed address)
+          handler: handleAllow
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Claim(indexed address,uint256)
+          handler: handleClaim
+        - event: Mint(indexed address,uint256,uint256,uint256)
+          handler: handleMint
+        - event: Renounce(indexed address,uint256)
+          handler: handleRenounce
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/soas.ts
