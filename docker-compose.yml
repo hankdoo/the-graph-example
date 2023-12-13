@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  graph:
+    image: graphprotocol/graph-node:v0.31.0
+    environment:
+      ethereum: test_local:https://rpc.mainnet.oasys.games
+      postgres_db: graph_db
+      postgres_user: graph_user
+      postgres_pass: graph_pass
+      postgres_host: postgres
+      ipfs: http://ipfs:5001/
+    ports:
+      - 8000:8000/tcp # GraphQL(http)
+      - 8001:8001/tcp # GraphQL(websocket)
+      - 8020:8020/tcp # Admin API
+    depends_on:
+      - postgres
+      - ipfs
+
+  postgres:
+    image: postgres:15.3
+    ports:
+      - 5432:5432/tcp 
+    environment:
+      PGDATA: /data
+      POSTGRES_DB: graph_db
+      POSTGRES_USER: graph_user
+      POSTGRES_PASSWORD: graph_pass
+      POSTGRES_INITDB_ARGS: '--encoding=UTF8 --locale=C --lc-collate=C'
+    volumes:
+      - ./data/postgres:/data
+
+  ipfs:
+    image: ipfs/go-ipfs:v0.21.0
+    environment:
+      IPFS_PATH: /data
+    volumes:
+      - ./assets:/assets:ro
+      - ./data/ipfs:/data
+    ports:
+      - 5001:5001/tcp

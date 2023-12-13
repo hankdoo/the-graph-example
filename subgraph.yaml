@@ -4,7 +4,7 @@ schema:
 dataSources:
   - kind: ethereum
     name: SOAS
-    network: mainnet
+    network: test_local
     source:
       address: "0x5200000000000000000000000000000000000002"
       abi: SOAS

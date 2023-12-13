@@ -8,11 +8,14 @@
     "create-local": "graph create --node http://localhost:8020/ hankdoo/TestGraph",
     "remove-local": "graph remove --node http://localhost:8020/ hankdoo/TestGraph",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 hankdoo/TestGraph",
+    "build:local": "npm run remove-local && npm run create-local && npm run deploy-local",
     "test": "graph test"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.63.1",
     "@graphprotocol/graph-ts": "0.32.0"
   },
-  "devDependencies": { "matchstick-as": "0.5.0" }
+  "devDependencies": {
+    "matchstick-as": "0.5.0"
+  }
 }
